@@ -46,6 +46,15 @@ const EditProduct = () => {
         fetchProduct();
     }, [id]);
 
+    if (loading) {
+        return (
+            <div className="loading-container" style={{ minHeight: '220px', textAlign: 'center' }}>
+                <div className="loading-spinner"></div>
+                <p>Loading product details...</p>
+            </div>
+        );
+    }
+
     // 3. Submit updated details using FormData
     const handleSubmit = async (e) => {
         e.preventDefault();

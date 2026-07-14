@@ -34,23 +34,24 @@ const Checkout = () => {
     }
 
     try {
-        setPlacingOrder(true);
-          productId: item._id || item.id || item.productId, 
-          name: item.name || item.title, 
-          price: Number(item.price), 
-          quantity: Number(item.quantity || 1) 
+      setPlacingOrder(true);
+      const formattedItems = cartItems.map((item) => ({
+        productId: item._id || item.id || item.productId,
+        name: item.name || item.title,
+        price: Number(item.price),
+        quantity: Number(item.quantity || 1),
       }));
 
       // 2. Package the order data
-const orderData = {
-        items: formattedItems, 
-        address: { 
-            fullName: shippingInfo.fullName,
-            street: shippingInfo.street,
-            city: shippingInfo.city,
-            state: shippingInfo.state, 
-            zip: shippingInfo.zip,     
-            country: shippingInfo.country 
+      const orderData = {
+        items: formattedItems,
+        address: {
+          fullName: shippingInfo.fullName,
+          street: shippingInfo.street,
+          city: shippingInfo.city,
+          state: shippingInfo.state,
+          zip: shippingInfo.zip,
+          country: shippingInfo.country,
         },
         totalPrice: totalPrice,
         // No paymentId or paymentMethod needed here anymore!
