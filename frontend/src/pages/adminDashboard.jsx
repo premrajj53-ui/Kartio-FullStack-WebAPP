@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({ totalUsers: 0, totalProducts: 0, totalOrders: 0, totalRevenue: 0 });
+    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -17,6 +18,8 @@ const AdminDashboard = () => {
                 setStats(data);
             } catch (err) {
                 console.error("Failed to fetch stats", err);
+            } finally {
+                setLoading(false);
             }
         };
         fetchStats();
@@ -34,13 +37,22 @@ const AdminDashboard = () => {
         <div style={{ padding: '2rem', minHeight: '80vh' }}>
             <h1>Admin Control Panel</h1>
 
-            {/* Small Compact Stats Row */}
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-                <SmallStat title="Users" value={stats.totalUsers} />
-                <SmallStat title="Products" value={stats.totalProducts} />
-                <SmallStat title="Orders" value={stats.totalOrders} />
-                <SmallStat title="Revenue" value={`₹${stats.totalRevenue}`} />
-            </div>
+            {loading ? (
+                <div className="loading-container" style={{ minHeight: '220px' }}>
+                    <div className="loading-spinner"></div>
+                    <p>Loading dashboard...</p>
+                </div>
+            ) : (
+                <>
+                    {/* Small Compact Stats Row */}
+                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                        <SmallStat title="Users" value={stats.totalUsers} />
+                        <SmallStat title="Products" value={stats.totalProducts} />
+                        <SmallStat title="Orders" value={stats.totalOrders} />
+                        <SmallStat title="Revenue" value={`₹${stats.totalRevenue}`} />
+                    </div>
+                </>
+            )}
 
             {/* Navigation Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>

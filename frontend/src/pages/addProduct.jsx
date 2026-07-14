@@ -12,6 +12,7 @@ const AddProduct = () => {
         stock: ''
     });
     const [file, setFile] = useState(null); // State for the actual file
+    const [loading, setLoading] = useState(false);
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const AddProduct = () => {
         }
 
         try {
+            setLoading(true);
             const res = await fetch('/api/products', {
                 method: 'POST',
                 headers: { 
@@ -49,6 +51,8 @@ const AddProduct = () => {
         } catch (err) {
             console.error("Upload failed:", err);
             alert("Error connecting to server.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -94,7 +98,9 @@ const AddProduct = () => {
                     />
                 </div>
                 
-                <button className="submit-btn" type="submit">Upload Product</button>
+                <button className="submit-btn" type="submit" disabled={loading}>
+                    {loading ? 'Uploading...' : 'Upload Product'}
+                </button>
             </form>
         </div>
     );

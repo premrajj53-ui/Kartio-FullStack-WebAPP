@@ -7,7 +7,8 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
-    }); 
+    });
+    const [loading, setLoading] = useState(false);
     
     const { login } = useAuth(); 
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Login = () => {
     e.preventDefault();
     
     try {
+        setLoading(true);
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -46,6 +48,8 @@ const Login = () => {
     } catch (error) {
         console.error('Login error:', error);
         alert('Something went wrong during login.');
+    } finally {
+        setLoading(false);
     }
 };
     return (
@@ -81,8 +85,8 @@ const Login = () => {
                         />
                     </div>
 
-                    <button type="submit" className="auth-submit-btn">
-                        Log In
+                    <button type="submit" className="auth-submit-btn" disabled={loading}>
+                        {loading ? 'Logging In...' : 'Log In'}
                     </button>
                 </form>
 

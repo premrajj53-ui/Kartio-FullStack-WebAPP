@@ -6,7 +6,7 @@ import './styles/global.css';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'localhost:5000'; // Default to localhost if not set  
 const originalFetch = window.fetch.bind(window);
 
 window.fetch = (input, init) => {

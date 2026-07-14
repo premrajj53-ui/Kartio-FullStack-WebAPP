@@ -9,6 +9,7 @@ const Register = () => {
         password: '',
         confirmPassword: ''
     });
+    const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const Register = () => {
         }
         
         try {
+            setLoading(true);
             // Send registration data to your backend
             const response = await fetch('/api/auth/register', { 
                 method: 'POST',
@@ -48,6 +50,8 @@ const Register = () => {
         } catch (error) {
             console.error('Registration error:', error);
             alert('Something went wrong during registration.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -112,8 +116,8 @@ const Register = () => {
                         />
                     </div>
 
-                    <button type="submit" className="auth-submit-btn">
-                        Sign Up
+                    <button type="submit" className="auth-submit-btn" disabled={loading}>
+                        {loading ? 'Signing Up...' : 'Sign Up'}
                     </button>
                 </form>
 

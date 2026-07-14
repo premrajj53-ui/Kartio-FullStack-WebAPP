@@ -4,6 +4,7 @@ import '../styles/AdminOrders.css';
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -16,6 +17,8 @@ const AdminOrders = () => {
                 setOrders(data);
             } catch (err) {
                 console.error("Failed to fetch orders", err);
+            } finally {
+                setLoading(false);
             }
         };
         fetchOrders();
@@ -46,6 +49,17 @@ const AdminOrders = () => {
             alert("Error updating status");
         }
     };
+
+    if (loading) {
+        return (
+            <div className="admin-orders-container">
+                <div className="loading-container" style={{ minHeight: '220px' }}>
+                    <div className="loading-spinner"></div>
+                    <p>Loading orders...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="admin-orders-container">

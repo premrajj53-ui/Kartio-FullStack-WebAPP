@@ -5,14 +5,21 @@ import '../styles/AdminProduct.css'; // Correct relative path
 
 const AdminProducts = () => {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const res = await fetch('/api/products');
-            const data = await res.json();
-            setProducts(data);
+            try {
+                const res = await fetch('/api/products');
+                const data = await res.json();
+                setProducts(data);
+            } catch (err) {
+                console.error('Failed to fetch products', err);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchProducts();
     }, []);
@@ -26,6 +33,17 @@ const AdminProducts = () => {
             setProducts(products.filter(p => p._id !== id));
         }
     };
+
+    if (loading) {
+        return (
+            <div className="admin-products-container">
+                <div className="loading-container" style={{ minHeight: '220px' }}>
+                    <div className="loading-spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="admin-products-container">

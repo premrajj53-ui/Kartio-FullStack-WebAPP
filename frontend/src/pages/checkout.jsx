@@ -22,6 +22,7 @@ const Checkout = () => {
   });
   
   const totalPrice = cartItems.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
+  const [placingOrder, setPlacingOrder] = useState(false);
 
   const handlePlaceOrder = async () => {
     // 1. Validations (Now checks for state and zip)
@@ -33,7 +34,7 @@ const Checkout = () => {
     }
 
     try {
-      const formattedItems = cartItems.map((item) => ({
+        setPlacingOrder(true);
           productId: item._id || item.id || item.productId, 
           name: item.name || item.title, 
           price: Number(item.price), 
@@ -77,6 +78,8 @@ const orderData = {
     } catch (error) {
       console.error(error);
       alert(`Order failed: ${error.message}`);
+    } finally {
+      setPlacingOrder(false);
     }
   };
 
@@ -127,8 +130,8 @@ const orderData = {
             <p className="cod-info-subtitle">You will pay when the order arrives at your address.</p>
           </div>
 
-          <button type="button" className="checkout-action" onClick={handlePlaceOrder}>
-            Place Order Now
+          <button type="button" className="checkout-action" onClick={handlePlaceOrder} disabled={placingOrder}>
+            {placingOrder ? 'Placing Order...' : 'Place Order Now'}
           </button>
         </div>
         

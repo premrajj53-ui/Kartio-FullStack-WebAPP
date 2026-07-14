@@ -18,6 +18,8 @@ const EditProduct = () => {
     });
     const [file, setFile] = useState(null);
     const [currentImage, setCurrentImage] = useState(''); // To show the existing image
+    const [loading, setLoading] = useState(true);
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     // 2. Fetch current product details on load
     useEffect(() => {
@@ -37,6 +39,8 @@ const EditProduct = () => {
                 setCurrentImage(data.imageUrl); // Store existing image URL
             } catch (err) {
                 console.error("Failed to fetch product details", err);
+            } finally {
+                setLoading(false);
             }
         };
         fetchProduct();
@@ -59,6 +63,7 @@ const EditProduct = () => {
         }
 
         try {
+            setSubmitLoading(true);
             const res = await fetch(`/api/products/${id}`, {
                 method: 'PUT',
                 headers: { 
@@ -78,6 +83,8 @@ const EditProduct = () => {
         } catch (err) {
             console.error(err);
             alert("Network error occurred.");
+        } finally {
+            setSubmitLoading(false);
         }
     };
 
@@ -124,7 +131,9 @@ const EditProduct = () => {
                     <small style={{ color: '#666' }}>Leave empty to keep the current image.</small>
                 </div>
                 
-                <button type="submit" className="submit-btn">Save Changes</button>
+                <button type="submit" className="submit-btn" disabled={submitLoading}>
+                    {submitLoading ? 'Saving...' : 'Save Changes'}
+                </button>
             </form>
         </div>
     );

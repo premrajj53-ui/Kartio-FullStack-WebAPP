@@ -6,6 +6,7 @@ import "../styles/auth.css";
 const VerifyEmail = () => {
     const [otp, setOtp] = useState('');
     const [isResending, setIsResending] = useState(false); // Prevents button spamming
+    const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
     
@@ -22,6 +23,7 @@ const VerifyEmail = () => {
         }
 
         try {
+            setLoading(true);
             const response = await fetch('/api/auth/verify-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -41,6 +43,8 @@ const VerifyEmail = () => {
         } catch (error) {
             console.error("Verification error:", error);
             alert("Something went wrong during verification.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -96,8 +100,8 @@ const VerifyEmail = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="auth-submit-btn">
-                        Verify & Log In
+                    <button type="submit" className="auth-submit-btn" disabled={loading}>
+                        {loading ? 'Verifying...' : 'Verify & Log In'}
                     </button>
                 </form>
 
@@ -108,7 +112,7 @@ const VerifyEmail = () => {
                         <button 
                             type="button" 
                             onClick={handleResendOtp} 
-                            disabled={isResending}
+                            disabled={isResending || loading}
                             style={{ 
                                 background: 'none', 
                                 border: 'none', 

@@ -4,15 +4,22 @@ import '../styles/AdminUsers.css';
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const res = await fetch('/api/auth/users', { // Ensure this route is correct
-                headers: { 'Authorization': `Bearer ${user?.token}` }
-            });
-            const data = await res.json();
-            setUsers(data);
+            try {
+                const res = await fetch('/api/auth/users', { // Ensure this route is correct
+                    headers: { 'Authorization': `Bearer ${user?.token}` }
+                });
+                const data = await res.json();
+                setUsers(data);
+            } catch (err) {
+                console.error('Failed to fetch users', err);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchUsers();
     }, [user]);
@@ -26,6 +33,17 @@ const AdminUsers = () => {
             setUsers(users.filter(u => u._id !== id));
         }
     };
+
+    if (loading) {
+        return (
+            <div className="admin-users-container">
+                <div className="loading-container" style={{ minHeight: '220px' }}>
+                    <div className="loading-spinner"></div>
+                    <p>Loading users...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="admin-users-container">
