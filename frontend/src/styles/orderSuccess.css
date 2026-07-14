@@ -1,0 +1,85 @@
+.success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 20px;
+  background-color: #f9fafb;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.success-card {
+  background-color: #ffffff;
+  padding: 50px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid #f3f4f6;
+}
+
+.success-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #d1fae5; /* Light green */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 25px auto;
+}
+
+.success-icon {
+  font-size: 2.5rem;
+  color: #10b981; /* Darker green */
+  font-weight: bold;
+}
+
+.success-card h1 {
+  color: #1a1a2e;
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: #4b5563;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.success-cod-note {
+  background-color: #f3f4f6;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #7c3aed; /* Kartio Purple */
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.success-cod-note p {
+  margin: 5px 0;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.continue-shopping-btn {
+  display: inline-block;
+  background-color: #7c3aed;
+  color: white;
+  text-decoration: none;
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+}
+
+.continue-shopping-btn:hover {
+  background-color: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(124, 58, 237, 0.3);
+}

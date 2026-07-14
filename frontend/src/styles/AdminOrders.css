@@ -1,0 +1,56 @@
+.admin-orders-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-orders-title {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-orders-table th {
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.admin-orders-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+/* Pseudo-class to highlight the row a user is looking at */
+.admin-orders-table tbody tr:hover td {
+    background-color: #f1f5f9;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.status-select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 0.9rem;
+}
+
+/* Pseudo-class to show the dropdown is active */
+.status-select:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}

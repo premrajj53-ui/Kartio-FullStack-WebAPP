@@ -1,0 +1,120 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--color-primary-soft);
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  width: 400px;
+}
+
+.auth-title {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary-soft);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}           
+
+.auth-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.auth-submit-btn:hover,
+.auth-submit-btn:focus-visible {
+  color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+  outline: none;
+}
+
+.auth-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.auth-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.auth-link:hover,
+.auth-link:focus-visible {
+  color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .auth-card {
+    width: 100%;
+  }
+}

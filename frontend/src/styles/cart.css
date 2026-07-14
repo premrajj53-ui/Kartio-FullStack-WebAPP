@@ -1,0 +1,149 @@
+/* --- Cart Container --- */
+.cart-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  min-height: 60vh;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Cart Header --- */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f0f0f5;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.cart-header h2 {
+  font-size: 2rem;
+  color: #1a1a2e; /* Dark navy to match your footer */
+  margin: 0;
+}
+
+/* Matches your "Sign Up" / "Shop Now" buttons */
+.cart-btn {
+  background-color: #7c3aed; /* Vibrant Kartio Purple */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+}
+
+.cart-btn:hover {
+  background-color: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(124, 58, 237, 0.3);
+}
+
+/* --- Cart Items List --- */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f4f4f9;
+  transition: transform 0.2s ease;
+}
+
+.cart-item:hover {
+  transform: scale(1.01);
+}
+
+/* --- Product Image --- */
+.cart-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain; /* Ensures the whole product is visible without stretching */
+  border-radius: 8px;
+  background-color: #f8f9fa; /* Light background for transparent images */
+  padding: 5px;
+}
+
+/* --- Product Info --- */
+.cart-item-info {
+  flex-grow: 1; /* Pushes the remove button all the way to the right */
+  margin-left: 20px;
+}
+
+.cart-item-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.cart-item-info p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #7c3aed; /* Kartio Purple for the price */
+  font-weight: 600;
+}
+
+/* --- Remove Button --- */
+.cart-item-remove button {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cart-item-remove button:hover {
+  background-color: #f87171;
+  color: white;
+}
+
+/* --- Cart Total Section --- */
+.cart-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f5;
+}
+
+.cart-total h3 {
+  font-size: 1.5rem;
+  color: #1a1a2e;
+  background-color: #f3f4f6;
+  padding: 15px 30px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+  .cart-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .cart-item-info {
+    margin-left: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .cart-total {
+    justify-content: center;
+  }
+}

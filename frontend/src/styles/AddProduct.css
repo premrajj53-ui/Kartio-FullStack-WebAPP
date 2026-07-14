@@ -1,0 +1,90 @@
+/* Container and Title */
+.add-product-container { 
+    padding: 2rem; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.add-product-title { 
+    margin-bottom: 1.5rem; 
+    color: #333; 
+}
+
+/* Form Card Styling */
+.add-product-form { 
+    width: 100%; 
+    max-width: 500px; 
+    background: #fff; 
+    padding: 2rem; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+}
+
+/* Individual Form Groups */
+.form-group { 
+    margin-bottom: 1.2rem; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.form-group label { 
+    margin-bottom: 0.4rem; 
+    font-size: 0.9rem; 
+    color: #555; 
+    font-weight: bold; 
+}
+
+/* Inputs and Textareas */
+.form-group input[type="text"], 
+.form-group input[type="number"], 
+.form-group textarea { 
+    padding: 0.8rem; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 1rem; 
+    font-family: inherit;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus { 
+    border-color: #2196f3; 
+    outline: none; 
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2); 
+}
+
+/* Two-column layout for Price and Stock */
+.row-group { 
+    flex-direction: row; 
+    gap: 1rem; 
+}
+
+.half-width { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+/* File Input Styling */
+.file-input { 
+    padding: 0.5rem 0; 
+}
+
+/* Submit Button */
+.submit-btn { 
+    width: 100%; 
+    padding: 1rem; 
+    background-color: #4caf50; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    font-size: 1.1rem; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin-top: 1rem; 
+    transition: background 0.2s ease-in-out; 
+}
+
+.submit-btn:hover { 
+    background-color: #43a047; 
+}
