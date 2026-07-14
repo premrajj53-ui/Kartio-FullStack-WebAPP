@@ -1,7 +1,7 @@
 {
-  "name": "shopnest",
+  "name": "Kartio",
   "version": "1.0.0",
-  "author": "Shivansh Vasu",
+  "author": "prem",
   "description": "Full-Stack MERN E-Commerce App",
   "scripts": {
     "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
