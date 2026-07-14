@@ -6,12 +6,12 @@ import './styles/global.css';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'localhost:5000'; // Default to localhost if not set  
+const API_BASE_URL = process.env.REACT_APP_API_URL || ''; // Use relative paths in production by default
 const originalFetch = window.fetch.bind(window);
 
 window.fetch = (input, init) => {
   const url =
-    typeof input === 'string' && input.startsWith('/api/')
+    typeof input === 'string' && input.startsWith('/api/') && API_BASE_URL
       ? `${API_BASE_URL}${input}`
       : input;
 
