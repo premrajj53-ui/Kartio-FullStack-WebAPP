@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "../styles/auth.css"; 
+
+const EMAIL_STORAGE_KEY = 'pendingVerificationEmail';
 
 const VerifyEmail = () => {
     const [otp, setOtp] = useState('');
@@ -9,10 +11,23 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
-    
-    // Grab the email that was passed from the Register or Login component
     const location = useLocation();
-    const email = location.state?.email; 
+    const initialEmail = location.state?.email || localStorage.getItem(EMAIL_STORAGE_KEY) || '';
+    const [email, setEmail] = useState(initialEmail);
+
+    useEffect(() => {
+        const emailFromState = location.state?.email;
+        if (emailFromState) {
+            setEmail(emailFromState);
+            localStorage.setItem(EMAIL_STORAGE_KEY, emailFromState);
+        }
+    }, [location.state]);
+
+    useEffect(() => {
+        if (!email) {
+            navigate('/login');
+        }
+    }, [email, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +49,7 @@ const VerifyEmail = () => {
 
             if (response.ok) {
                 // Email is verified and backend sent the token! Log them in.
+                localStorage.removeItem(EMAIL_STORAGE_KEY);
                 login(data.user || data); 
                 alert("Email verified successfully!");
                 navigate('/'); 
@@ -55,10 +71,9 @@ const VerifyEmail = () => {
             return;
         }
 
+        localStorage.setItem(EMAIL_STORAGE_KEY, email);
         setIsResending(true);
         try {
-            // NOTE: Double check what your backend route for resending is actually named! 
-            // Update '/api/auth/resend-otp' if your backend calls it something else.
             const response = await fetch('/api/auth/resend-verification-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -90,12 +105,14 @@ const VerifyEmail = () => {
                     <div className="form-group">
                         <label htmlFor="otp">Enter OTP</label>
                         <input
-                            type="text"
+                            type="tel"
                             id="otp"
                             value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
+                            onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ''))}
                             className="form-input"
                             maxLength="6"
+                            inputMode="numeric"
+                            pattern="\d{6}"
                             placeholder="123456"
                             required
                         />
