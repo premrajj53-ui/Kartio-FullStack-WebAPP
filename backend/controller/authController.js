@@ -111,7 +111,8 @@ const getUsers = async (req, res) => {
 };
 
 const verifyEmail = async (req, res) => {
-    const { email, otp } = req.body;
+    const email = req.body.email?.trim();
+    const otp = String(req.body.otp || '').trim();
 
     try {
         const user = await User.findOne({ email });
@@ -123,12 +124,13 @@ const verifyEmail = async (req, res) => {
             return res.status(200).json({ message: "Email already verified" });
         }
 
-        if (
-            !user.emailVerificationOtp ||
-            user.emailVerificationOtp !== otp ||
-            !user.emailVerificationOtpExpires ||
-            user.emailVerificationOtpExpires < Date.now()
-        ) {
+        const storedOtp = String(user.emailVerificationOtp || '').trim();
+        const expiresAt = user.emailVerificationOtpExpires;
+        const now = Date.now();
+        const otpMismatch = storedOtp !== otp;
+        const expired = !expiresAt || expiresAt < now;
+
+        if (!storedOtp || otpMismatch || expired) {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
 

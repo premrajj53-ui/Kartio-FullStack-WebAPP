@@ -108,7 +108,7 @@ const VerifyEmail = () => {
                             type="tel"
                             id="otp"
                             value={otp}
-                            onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ''))}
+                            onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, '').trim())}
                             className="form-input"
                             maxLength="6"
                             inputMode="numeric"
