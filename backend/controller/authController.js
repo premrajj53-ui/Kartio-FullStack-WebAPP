@@ -44,6 +44,11 @@ const registerUser = async (req, res) => {
         });
 
         const emailSent = await sendVerificationOtp(user);
+        if (!emailSent) {
+            return res.status(502).json({
+                message: "OTP email could not be sent. Please try again in a few moments.",
+            });
+        }
 
         res.status(201).json({
             _id: user._id,
@@ -51,9 +56,7 @@ const registerUser = async (req, res) => {
             email: user.email,
             role: user.role,
             verified: user.verified,
-            message: emailSent
-                ? "User registered successfully. Please check your email for the OTP."
-                : "User registered successfully, but OTP email could not be sent. Please resend OTP.",
+            message: "User registered successfully. Please check your email for the OTP.",
         });
     } catch (error) {
         console.error("--> FATAL ERROR IN REGISTER:", error);
@@ -164,7 +167,7 @@ const resendVerificationOtp = async (req, res) => {
 
         const emailSent = await sendVerificationOtp(user);
         if (!emailSent) {
-            return res.status(500).json({ message: "Could not send OTP email" });
+            return res.status(502).json({ message: "Could not send OTP email. Please try again later." });
         }
 
         res.status(200).json({ message: "OTP sent successfully" });
