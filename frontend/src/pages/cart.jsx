@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/cart.css';
 import { removeFromCart } from '../redux/cartSlice';
 const Cart = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -24,15 +25,21 @@ const Cart = () => {
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeFromCart(itemId));
-};
+  };
+
+  const handleCheckout = () => {
+    if (user) {
+      navigate('/checkout');
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="cart-container">
       <div className="cart-header">
         <h2>Your Cart</h2>
-        <Link to="/checkout">        
-          <button className="cart-btn">Checkout</button>
-        </Link>
+        <button className="cart-btn" onClick={handleCheckout}>Checkout</button>
       </div>
       <div className="cart-items">
         {cartItems.map((item) => (
@@ -48,11 +55,9 @@ const Cart = () => {
           </div>
         ))}
       </div>
-      {user && (
-        <div className="cart-total">
-          <h3>Total: ${totalPrice}</h3>
-        </div>
-      )}
+      <div className="cart-total">
+        <h3>Total: ${totalPrice}</h3>
+      </div>
     </div>
   );
 };  
