@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 24px;
   padding: 14px var(--page-padding);
   background: rgba(255, 255, 255, 0.94);
@@ -94,6 +95,8 @@
 }
 
 .navbar-greeting {
+  display: flex;
+  align-items: center;
   max-width: 180px;
   color: var(--color-text);
   font-size: 0.95rem;
@@ -101,6 +104,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.admin-badge {
+  background-color: #ff4757;
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(255, 71, 87, 0.3);
 }
 
 .navbar-user {
@@ -143,76 +159,14 @@
   background: var(--color-primary-soft);
   outline: none;
 }
-/* --- Admin Badge Styling --- */
-.navbar-greeting {
-  display: flex;
-  align-items: center;
-  font-weight: 500;
-  color: #333;
-}
 
-.admin-badge {
-  background-color: #ff4757; /* A nice striking red/coral color */
-  color: white;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 12px;
-  margin-left: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 4px rgba(255, 71, 87, 0.3);
-}
-@media (max-width: 640px) {
-  .navbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 14px;
-    padding: 14px var(--page-padding);
-  }
-
-  .navbar-links {
-    width: 100%;
-    justify-content: space-between;
-    gap: 4px;
-  }
-
-  .navbar-link,
-  .navbar-action,
-  .navbar-user-button {
-    justify-content: center;
-    flex: 1;
-    padding: 0 10px;
-    font-size: 0.92rem;
-  }
-
-  .navbar-greeting {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-height: 40px;
-    font-size: 0.9rem;
-  }
-
-  .navbar-user {
-    flex: 1;
-  }
-
-  .navbar-dropdown {
-    right: auto;
-    left: 0;
-  }
-}
-/* Container needs relative positioning so the dropdown anchors to it */
 .navbar-profile-container {
   position: relative;
 }
 
-/* The actual dropdown box */
 .profile-dropdown-menu {
   position: absolute;
-  top: 120%; /* Pushes it just below the navbar */
+  top: 120%; 
   right: 0;
   background-color: white;
   border: 1px solid #eaeaea;
@@ -225,7 +179,6 @@
   overflow: hidden;
 }
 
-/* Links and buttons inside the dropdown */
 .dropdown-item {
   padding: 12px 16px;
   text-decoration: none;
@@ -242,7 +195,6 @@
   background-color: #f5f5f5;
 }
 
-/* Specific styling for the logout button in the menu */
 .logout-btn {
   color: #d9534f;
   border-top: 1px solid #eaeaea;
@@ -251,4 +203,57 @@
 
 .logout-btn:hover {
   background-color: #fdf5f5;
+}
+
+@media screen and (max-width: 900px) {
+  .navbar {
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: center;
+    order: 3; 
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .navbar-brand {
+    flex-grow: 1; 
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar-link,
+  .navbar-action,
+  .navbar-user-button {
+    padding: 0 8px;
+    font-size: 0.85rem;
+    min-height: 36px;
+  }
+
+  .navbar-brand-logo {
+    font-size: 1.25rem;
+  }
+
+  .navbar-brand-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .navbar-greeting {
+    font-size: 0.85rem;
+  }
+
+  .admin-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
 }
