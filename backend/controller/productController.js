@@ -3,7 +3,18 @@ const cloudinary = require('../config/cloudinary');
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find(); 
+        console.log("1. FULL REQUEST URL:", req.originalUrl);
+        console.log("2. WHAT NODE HEARS AS KEYWORD:", req.query.keyword);
+    
+        const keyword = req.query.keyword ? {
+            name: {
+                $regex: req.query.keyword,
+                $options: 'i' 
+            }
+        } : {};
+
+        const products = await Product.find({ ...keyword }); 
+        
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Server error" });

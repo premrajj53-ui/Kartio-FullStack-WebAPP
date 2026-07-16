@@ -7,32 +7,25 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const configuredOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000,http://127.0.0.1:3000')
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+
+const liveFrontend = process.env.FRONTEND_URL || '';
 
 const allowedOrigins = [
-  ...new Set([
-    ...configuredOrigins,
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://localhost:3001',
-    'http://127.0.0.1:3001',
-  ]),
+  liveFrontend,             
+  'http://localhost:3000',   
+  'http://127.0.0.1:3000'
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      
       if (!origin || allowedOrigins.includes(origin) || /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) {
         callback(null, true);
       } else {
         callback(null, false);
       }
     },
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );

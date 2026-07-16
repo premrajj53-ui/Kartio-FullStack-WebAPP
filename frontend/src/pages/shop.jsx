@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/productCard';
+import '../styles/searchResult.css';
+
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,8 +23,14 @@ const Shop = () => {
 
     if (loading) {
         return (
-            <div style={{ padding: '2rem' }}>
-                <div className="loading-container" style={{ minHeight: '220px' }}>
+            <div className="page-shell">
+                <div className="page-header">
+                    <div>
+                        <h1 className="page-title">Our Products</h1>
+                        <p className="page-subtitle">Discover a curated collection of quality items.</p>
+                    </div>
+                </div>
+                <div className="loading-state">
                     <div className="loading-spinner"></div>
                     <p>Loading products...</p>
                 </div>
@@ -31,14 +39,27 @@ const Shop = () => {
     }
 
     return (
-        <div style={{ padding: '2rem' }}>
-            <h1>Our Products</h1>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem' }}>
-                {products.map(product => (
-                    // Reusing your existing component here
-                    <ProductCard key={product._id} product={product} />
-                ))}
+        <div className="page-shell">
+            <div className="page-header">
+                <div>
+                    <h1 className="page-title">Our Products</h1>
+                    <p className="page-subtitle">Discover a curated collection of quality items.</p>
+                </div>
             </div>
+
+            {products.length === 0 ? (
+                <div className="empty-state">
+                    <p>No products are available right now.</p>
+                </div>
+            ) : (
+                <div className="product-grid">
+                    {products.map(product => (
+                        <div key={product._id}>
+                            <ProductCard product={product} />
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

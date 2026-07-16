@@ -2,8 +2,17 @@ import { useState } from 'react'; // Import useState
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "../styles/navbar.css";
-
+import { useLocation } from 'react-router-dom';
+import Search from './search';
 const Navbar = () => {
+  const location = useLocation();
+    
+  
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+    const isAdminPage = location.pathname.startsWith('/admin');
+    const showSearchBar = !isAuthPage && !isAdminPage;
+
+
   const { user, logout } = useAuth();
   
   // State to control the profile dropdown visibility
@@ -25,6 +34,11 @@ const Navbar = () => {
           <span>kartio</span>
         </Link>
       </div>
+     {showSearchBar && (
+                <div className="nav-search">
+                    <Search />
+                </div>
+            )}
       <ul className="navbar-links">
         <li>
           <Link to="/shop" className="navbar-link">Shop</Link>

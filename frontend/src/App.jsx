@@ -20,6 +20,7 @@ import AdminOrders from './pages/adminOrders';
 import AddProduct from './pages/addProduct';
 import AdminUsers from './pages/adminUsers';
 import Shop from'./pages/shop';
+import SearchResults from './pages/searchResult';
 import './styles/global.css';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/admin/addProduct" element={<AddProduct />} />
           <Route path="/shop" element={<Shop/>} />
           <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/search" element={<SearchResults />} />
         </Routes>
       </main>
       
