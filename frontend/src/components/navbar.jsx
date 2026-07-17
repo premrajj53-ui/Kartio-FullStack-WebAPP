@@ -1,17 +1,18 @@
-import { useState } from 'react'; // Import useState
-import { Link } from 'react-router-dom';
+import { useState } from 'react'; 
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "../styles/navbar.css";
-import { useLocation } from 'react-router-dom';
 import Search from './search';
+
 const Navbar = () => {
   const location = useLocation();
     
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAdminPage = location.pathname.startsWith('/admin');
   
-    const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
-    const isAdminPage = location.pathname.startsWith('/admin');
-    const showSearchBar = !isAuthPage && !isAdminPage;
-
+  // Logic to control what shows in the navbar
+  const showSearchBar = !isAuthPage && !isAdminPage;
+  const showShopAndCart = !isAdminPage; // Hides Shop and Cart on Admin pages
 
   const { user, logout } = useAuth();
   
@@ -31,21 +32,28 @@ const Navbar = () => {
       <div className="navbar-brand">
         <Link to="/" className="navbar-brand-logo">
           <img src="logo.png" alt="kartio logo" />
-          <span>kartio</span>
+          <span className="navbar-brand-name">Kartio</span>
         </Link>
       </div>
-     {showSearchBar && (
-                <div className="nav-search">
-                    <Search />
-                </div>
-            )}
+      
+      {showSearchBar && (
+        <div className="nav-search">
+            <Search />
+        </div>
+      )}
+      
       <ul className="navbar-links">
-        <li>
-          <Link to="/shop" className="navbar-link">Shop</Link>
-        </li>
-        <li>
-          <Link to="/cart" className="navbar-link">Cart</Link>
-        </li>
+        {/* Only render Shop and Cart if we are NOT on an admin page */}
+        {showShopAndCart && (
+          <>
+            <li>
+              <Link to="/shop" className="navbar-link">Shop</Link>
+            </li>
+            <li>
+              <Link to="/cart" className="navbar-link">Cart</Link>
+            </li>
+          </>
+        )}
         
         {user ? (
           <>

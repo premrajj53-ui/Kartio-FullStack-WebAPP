@@ -31,12 +31,25 @@
   text-decoration: none;
   text-transform: capitalize;
 }
+.navbar-brand-logo :hover {
+
+  color: var(--color-primary-dark);
+  transition: color 0.2s ease;
+}
 
 .navbar-brand-logo img {
   width: 42px;
   height: 42px;
   object-fit: contain;
   flex: 0 0 auto;
+}
+.navbar-brand-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-left: 8px;
 }
 
 .navbar-links {
@@ -204,6 +217,7 @@
 .logout-btn:hover {
   background-color: #fdf5f5;
 }
+/* --- STRICT MOBILE RESPONSIVENESS (Flexbox Layout) --- */
 
 @media screen and (max-width: 900px) {
   .navbar {
@@ -213,24 +227,49 @@
 
 @media screen and (max-width: 768px) {
   .navbar {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to break onto new lines */
+    align-items: center;
     padding: 12px;
-    gap: 12px;
+    gap: 0; 
   }
 
-  .navbar-links {
-    width: 100%;
-    justify-content: center;
-    order: 3; 
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
+  /* --- ROW 1 --- */
+  
+  /* 1. Logo */
   .navbar-brand {
-    flex-grow: 1; 
+    order: 1;
+    flex: 0 0 auto; 
+    margin-right: 12px; 
   }
-}
 
-@media screen and (max-width: 480px) {
+  /* 2. Search Bar Wrapper */
+  .nav-search {
+    order: 2;
+    flex: 1 1 auto; /* Stretches the wrapper to fill the space next to logo */
+  }
+
+  /* Force the inner search component to stretch properly inside the wrapper */
+  .nav-search .search-container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  /* --- ROW 2 --- */
+  
+  /* 3. Links */
+  .navbar-links {
+    order: 3;
+    flex: 0 0 100%; /* Mathematically forces this container to a brand new line */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-top: 16px; 
+    padding: 0;
+  }
+
+  /* Keep buttons compact */
   .navbar-link,
   .navbar-action,
   .navbar-user-button {
@@ -238,7 +277,9 @@
     font-size: 0.85rem;
     min-height: 36px;
   }
+}
 
+@media screen and (max-width: 480px) {
   .navbar-brand-logo {
     font-size: 1.25rem;
   }
@@ -248,8 +289,14 @@
     height: 32px;
   }
 
-  .navbar-greeting {
+  .navbar-link {
+    padding: 0 6px;
     font-size: 0.85rem;
+  }
+
+  .profile-dropdown-menu, .navbar-dropdown {
+    right: 0;
+    left: auto;
   }
 
   .admin-badge {
