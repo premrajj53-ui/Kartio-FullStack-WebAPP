@@ -20,8 +20,36 @@ const sendVerificationOtp = async (user) => {
     user.emailVerificationOtpExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
 
-    const message = `Welcome to Kartio! Your OTP for email verification is: ${otp}. This OTP expires in 10 minutes.`;
-    return sendEmail(user.email, "Kartio email verification OTP", message);
+    // 1. The Plain Text Fallback (Required for spam filters)
+    const textMessage = `Welcome to Kartio! Your OTP for email verification is: ${otp}. This OTP expires in 10 minutes.`;
+    
+    // 2. The HTML Version (Makes it look professional and avoids spam triggers)
+    const htmlMessage = `
+        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 10px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #7c3aed; margin: 0;">Welcome to Kartio!</h2>
+            </div>
+            <p style="color: #334155; font-size: 16px;">Hi ${user.name || 'there'},</p>
+            <p style="color: #334155; font-size: 16px;">Here is your one-time password (OTP) to verify your email address:</p>
+            
+            <div style="background-color: #f8fafc; border-radius: 8px; padding: 20px; text-align: center; margin: 24px 0;">
+                <h1 style="font-size: 36px; letter-spacing: 8px; color: #0f172a; margin: 0;">${otp}</h1>
+            </div>
+            
+            <p style="color: #64748b; font-size: 14px;">This code will expire in <strong>10 minutes</strong>. Please do not share this code with anyone.</p>
+            
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
+            <p style="color: #94a3b8; font-size: 12px; text-align: center;">If you didn't attempt to register an account with Kartio, you can safely ignore this email.</p>
+        </div>
+    `;
+
+    // 3. Send both versions to SendGrid
+    return sendEmail(
+        user.email, 
+        "Your Kartio Verification Code", 
+        textMessage, 
+        htmlMessage
+    );
 };
 
 const registerUser = async (req, res) => {
@@ -78,13 +106,13 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-       if (!user.verified) {
-    return res.status(403).json({ 
-        message: "Please verify your email before logging in",
-        notVerified: true,  // The frontend will look for this flag
-        email: user.email   // Send the email so the OTP page knows who it is
-    });
-}
+        if (!user.verified) {
+            return res.status(403).json({ 
+                message: "Please verify your email before logging in",
+                notVerified: true,  // The frontend will look for this flag
+                email: user.email   // Send the email so the OTP page knows who it is
+            });
+        }
 
         res.json({
             _id: user._id,

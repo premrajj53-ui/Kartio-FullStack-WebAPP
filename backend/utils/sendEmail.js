@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 
-const sendEmail = async (to, subject, text) => {
+const sendEmail = async (to, subject, text, html) => { // Added 'html' parameter
     try {
         console.log('sendEmail: attempt to send to', to);
         const apiKey = process.env.SENDGRID_API_KEY;
@@ -20,6 +20,7 @@ const sendEmail = async (to, subject, text) => {
             replyTo,
             subject,
             text,
+            html, // Tell SendGrid to use the HTML version
         };
 
         await sgMail.send(msg);
