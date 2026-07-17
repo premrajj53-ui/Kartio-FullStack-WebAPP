@@ -18,7 +18,7 @@ const Login = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
@@ -35,13 +35,24 @@ const Login = () => {
             login(data.user || data); 
             navigate('/');
         } else {
-            // Check if the backend sent our custom 'notVerified' flag
             if (data.notVerified) {
-                alert("Your account is not verified. Redirecting to OTP page...");
-                // Send them to the verify page and pass the email along
+                // 1. Alert the user
+                alert("Your account is not verified. Sending a new OTP and redirecting...");
+                
+                // 2. Automatically trigger the OTP generation
+                try {
+                    await fetch('/api/auth/resend-verification-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: data.email }),
+                    });
+                } catch (otpError) {
+                    console.error('Failed to auto-send OTP:', otpError);
+                }
+
+                // 3. Navigate to the verify page
                 navigate('/verify', { state: { email: data.email } });
             } else {
-                // For regular errors (like wrong password)
                 alert(data.message || 'Invalid email or password');
             }
         }
